@@ -1,0 +1,450 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.7.1
+# options: -q -O2 -IC:/dev/blender/intern/cycles/kernel/shaders -o C:/dev/build_cmake2/intern/cycles/kernel/shaders/node_rgb_curves.oso
+shader node_rgb_curves
+param	color[256]	ramp	0 0 0		%read{15,175} %write{2147483647,-1}
+param	float	min_x	0		%read{0,2} %write{2147483647,-1}
+param	float	max_x	1		%read{2,2} %write{2147483647,-1}
+param	color	ColorIn	0 0 0		%read{1,181} %write{2147483647,-1}
+param	float	Fac	0		%read{181,181} %write{2147483647,-1}
+oparam	color	ColorOut	0 0 0		%read{181,181} %write{62,181}
+local	float	___644_t0	%read{19,151} %write{16,141}
+local	float	___644_dy	%read{29,147} %write{19,145}
+local	float	___643_f	%read{41,167} %write{40,158}
+local	int	___643_i	%read{42,174} %write{41,165}
+local	float	___643_t	%read{52,177} %write{49,167}
+local	float	___643_result	%read{55,179} %write{51,178}
+local	color	c	%read{4,122} %write{3,3}
+temp	color	$tmp1	%read{1,1} %write{0,0}
+temp	color	$tmp2	%read{3,3} %write{1,1}
+temp	float	$tmp3	%read{3,3} %write{2,2}
+temp	float	$tmp4	%read{62,62} %write{33,61}
+const	int	$const1	0		%read{4,162} %write{2147483647,-1}
+temp	float	$tmp5	%read{6,36} %write{4,28}
+const	string	$const2	"ramp_lookup"		%read{5,123} %write{2147483647,-1}
+const	float	$const3	0		%read{6,170} %write{2147483647,-1}
+temp	int	$tmp6	%read{7,7} %write{6,6}
+temp	int	$tmp7	%read{8,12} %write{7,11}
+const	float	$const4	1		%read{9,172} %write{2147483647,-1}
+temp	int	$tmp8	%read{10,10} %write{9,9}
+temp	int	$tmp9	%read{11,11} %write{10,10}
+temp	int	$tmp10	%read{14,14} %write{13,13}
+temp	color	$tmp11	%read{16,16} %write{15,15}
+const	int	$const5	1		%read{17,174} %write{2147483647,-1}
+temp	float	$tmp12	%read{19,19} %write{18,18}
+temp	color	$tmp13	%read{18,18} %write{17,17}
+const	int	$const6	256		%read{21,165} %write{2147483647,-1}
+temp	int	$tmp14	%read{22,22} %write{21,21}
+temp	color	$tmp15	%read{23,23} %write{22,22}
+const	int	$const7	2		%read{24,180} %write{2147483647,-1}
+temp	int	$tmp16	%read{25,25} %write{24,24}
+temp	float	$tmp17	%read{27,27} %write{26,26}
+temp	color	$tmp18	%read{26,26} %write{25,25}
+temp	float	$tmp19	%read{32,32} %write{29,29}
+temp	int	$tmp20	%read{31,31} %write{30,30}
+temp	float	$tmp21	%read{33,33} %write{32,32}
+temp	float	$tmp22	%read{32,32} %write{31,31}
+temp	float	$tmp23	%read{40,40} %write{37,37}
+const	string	$const8	"clamp"		%read{35,153} %write{2147483647,-1}
+temp	float	$tmp24	%read{37,37} %write{36,36}
+temp	int	$tmp25	%read{39,39} %write{38,38}
+temp	float	$tmp26	%read{40,40} %write{39,39}
+temp	int	$tmp27	%read{43,43} %write{42,42}
+temp	int	$tmp28	%read{46,46} %write{45,45}
+temp	float	$tmp29	%read{49,49} %write{48,48}
+temp	color	$tmp30	%read{51,51} %write{50,50}
+temp	int	$tmp31	%read{53,53} %write{52,52}
+temp	float	$tmp32	%read{55,55} %write{54,54}
+temp	float	$tmp33	%read{60,60} %write{55,55}
+temp	int	$tmp34	%read{57,57} %write{56,56}
+temp	float	$tmp35	%read{59,59} %write{58,58}
+temp	color	$tmp36	%read{58,58} %write{57,57}
+temp	float	$tmp37	%read{60,60} %write{59,59}
+temp	float	$tmp38	%read{121,121} %write{92,120}
+temp	float	$tmp39	%read{65,95} %write{63,87}
+temp	int	$tmp40	%read{66,66} %write{65,65}
+temp	int	$tmp41	%read{67,71} %write{66,70}
+temp	int	$tmp42	%read{69,69} %write{68,68}
+temp	int	$tmp43	%read{70,70} %write{69,69}
+temp	int	$tmp44	%read{73,73} %write{72,72}
+temp	color	$tmp45	%read{75,75} %write{74,74}
+temp	float	$tmp46	%read{78,78} %write{77,77}
+temp	color	$tmp47	%read{77,77} %write{76,76}
+temp	int	$tmp48	%read{81,81} %write{80,80}
+temp	color	$tmp49	%read{82,82} %write{81,81}
+temp	int	$tmp50	%read{84,84} %write{83,83}
+temp	float	$tmp51	%read{86,86} %write{85,85}
+temp	color	$tmp52	%read{85,85} %write{84,84}
+temp	float	$tmp53	%read{91,91} %write{88,88}
+temp	int	$tmp54	%read{90,90} %write{89,89}
+temp	float	$tmp55	%read{92,92} %write{91,91}
+temp	float	$tmp56	%read{91,91} %write{90,90}
+temp	float	$tmp57	%read{99,99} %write{96,96}
+temp	float	$tmp58	%read{96,96} %write{95,95}
+temp	int	$tmp59	%read{98,98} %write{97,97}
+temp	float	$tmp60	%read{99,99} %write{98,98}
+temp	int	$tmp61	%read{102,102} %write{101,101}
+temp	int	$tmp62	%read{105,105} %write{104,104}
+temp	float	$tmp63	%read{108,108} %write{107,107}
+temp	color	$tmp64	%read{110,110} %write{109,109}
+temp	int	$tmp65	%read{112,112} %write{111,111}
+temp	float	$tmp66	%read{114,114} %write{113,113}
+temp	float	$tmp67	%read{119,119} %write{114,114}
+temp	int	$tmp68	%read{116,116} %write{115,115}
+temp	float	$tmp69	%read{118,118} %write{117,117}
+temp	color	$tmp70	%read{117,117} %write{116,116}
+temp	float	$tmp71	%read{119,119} %write{118,118}
+temp	float	$tmp72	%read{180,180} %write{151,179}
+temp	float	$tmp73	%read{124,154} %write{122,146}
+temp	int	$tmp74	%read{125,125} %write{124,124}
+temp	int	$tmp75	%read{126,130} %write{125,129}
+temp	int	$tmp76	%read{128,128} %write{127,127}
+temp	int	$tmp77	%read{129,129} %write{128,128}
+temp	int	$tmp78	%read{132,132} %write{131,131}
+temp	color	$tmp79	%read{134,134} %write{133,133}
+temp	float	$tmp80	%read{137,137} %write{136,136}
+temp	color	$tmp81	%read{136,136} %write{135,135}
+temp	int	$tmp82	%read{140,140} %write{139,139}
+temp	color	$tmp83	%read{141,141} %write{140,140}
+temp	int	$tmp84	%read{143,143} %write{142,142}
+temp	float	$tmp85	%read{145,145} %write{144,144}
+temp	color	$tmp86	%read{144,144} %write{143,143}
+temp	float	$tmp87	%read{150,150} %write{147,147}
+temp	int	$tmp88	%read{149,149} %write{148,148}
+temp	float	$tmp89	%read{151,151} %write{150,150}
+temp	float	$tmp90	%read{150,150} %write{149,149}
+temp	float	$tmp91	%read{158,158} %write{155,155}
+temp	float	$tmp92	%read{155,155} %write{154,154}
+temp	int	$tmp93	%read{157,157} %write{156,156}
+temp	float	$tmp94	%read{158,158} %write{157,157}
+temp	int	$tmp95	%read{161,161} %write{160,160}
+temp	int	$tmp96	%read{164,164} %write{163,163}
+temp	float	$tmp97	%read{167,167} %write{166,166}
+temp	color	$tmp98	%read{169,169} %write{168,168}
+temp	int	$tmp99	%read{171,171} %write{170,170}
+temp	float	$tmp100	%read{173,173} %write{172,172}
+temp	float	$tmp101	%read{178,178} %write{173,173}
+temp	int	$tmp102	%read{175,175} %write{174,174}
+temp	float	$tmp103	%read{177,177} %write{176,176}
+temp	color	$tmp104	%read{176,176} %write{175,175}
+temp	float	$tmp105	%read{178,178} %write{177,177}
+code ___main___
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:62
+# 	color c = (ColorIn - color(min_x, min_x, min_x)) / (max_x - min_x);
+	color		$tmp1 min_x min_x min_x 	%filename{"C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl"} %line{62} %argrw{"wrrr"}
+	sub		$tmp2 ColorIn $tmp1 	%argrw{"wrr"}
+	sub		$tmp3 max_x min_x 	%argrw{"wrr"}
+	div		c $tmp2 $tmp3 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:64
+# 	ColorOut[0] = ramp_lookup(ramp, c[0], 0);
+	compref		$tmp5 c $const1 	%line{64} %argrw{"wrr"}
+	functioncall	$const2 62 	%argrw{"r"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:22
+# 	if (at < 0.0 || at > 1.0) {
+	lt		$tmp6 $tmp5 $const3 	%line{22} %argrw{"wrr"}
+	neq		$tmp7 $tmp6 $const1 	%argrw{"wrr"}
+	if		$tmp7 9 12 	%argrw{"r"}
+	gt		$tmp8 $tmp5 $const4 	%argrw{"wrr"}
+	neq		$tmp9 $tmp8 $const1 	%argrw{"wrr"}
+	assign		$tmp7 $tmp9 	%argrw{"wr"}
+	if		$tmp7 35 35 	%argrw{"r"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:24
+# 		if (at < 0.0) {
+	lt		$tmp10 $tmp5 $const3 	%line{24} %argrw{"wrr"}
+	if		$tmp10 21 29 	%argrw{"r"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:25
+# 			t0 = ramp[0][component];
+	aref		$tmp11 ramp $const1 	%line{25} %argrw{"wrr"}
+	compref		___644_t0 $tmp11 $const1 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:26
+# 			dy = t0 - ramp[1][component];
+	aref		$tmp13 ramp $const5 	%line{26} %argrw{"wrr"}
+	compref		$tmp12 $tmp13 $const1 	%argrw{"wrr"}
+	sub		___644_dy ___644_t0 $tmp12 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:27
+# 			at = -at;
+	neg		$tmp5 $tmp5 	%line{27} %argrw{"wr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:30
+# 			t0 = ramp[RAMP_TABLE_SIZE - 1][component];
+	sub		$tmp14 $const6 $const5 	%line{30} %argrw{"wrr"}
+	aref		$tmp15 ramp $tmp14 	%argrw{"wrr"}
+	compref		___644_t0 $tmp15 $const1 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:31
+# 			dy = t0 - ramp[RAMP_TABLE_SIZE - 2][component];
+	sub		$tmp16 $const6 $const7 	%line{31} %argrw{"wrr"}
+	aref		$tmp18 ramp $tmp16 	%argrw{"wrr"}
+	compref		$tmp17 $tmp18 $const1 	%argrw{"wrr"}
+	sub		___644_dy ___644_t0 $tmp17 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:32
+# 			at = at - 1.0;
+	sub		$tmp5 $tmp5 $const4 	%line{32} %argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:34
+# 		return t0 + dy * at * (RAMP_TABLE_SIZE - 1);
+	mul		$tmp19 ___644_dy $tmp5 	%line{34} %argrw{"wrr"}
+	sub		$tmp20 $const6 $const5 	%argrw{"wrr"}
+	assign		$tmp22 $tmp20 	%argrw{"wr"}
+	mul		$tmp21 $tmp19 $tmp22 	%argrw{"wrr"}
+	add		$tmp4 ___644_t0 $tmp21 	%argrw{"wrr"}
+	return
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:37
+# 	float f = clamp(at, 0.0, 1.0) * (RAMP_TABLE_SIZE - 1);
+	functioncall	$const8 38 	%line{37} %argrw{"r"}
+# C:/dev\\blender\\intern\\cycles\\kernel\\shaders\\stdosl.h:144
+# float  log (float a,  float b) { return log(a)/log(b); }
+	min		$tmp24 $tmp5 $const4 	%filename{"C:/dev\\blender\\intern\\cycles\\kernel\\shaders\\stdosl.h"} %line{144} %argrw{"wrr"}
+	max		$tmp23 $tmp24 $const3 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:37
+# 	float f = clamp(at, 0.0, 1.0) * (RAMP_TABLE_SIZE - 1);
+	sub		$tmp25 $const6 $const5 	%filename{"C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl"} %line{37} %argrw{"wrr"}
+	assign		$tmp26 $tmp25 	%argrw{"wr"}
+	mul		___643_f $tmp23 $tmp26 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:40
+# 	int i = (int)f;
+	assign		___643_i ___643_f 	%line{40} %argrw{"wr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:41
+# 	if (i < 0) i = 0;
+	lt		$tmp27 ___643_i $const1 	%line{41} %argrw{"wrr"}
+	if		$tmp27 45 45 	%argrw{"r"}
+	assign		___643_i $const1 	%argrw{"wr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:42
+# 	if (i >= RAMP_TABLE_SIZE) i = RAMP_TABLE_SIZE - 1;
+	ge		$tmp28 ___643_i $const6 	%line{42} %argrw{"wrr"}
+	if		$tmp28 48 48 	%argrw{"r"}
+	sub		___643_i $const6 $const5 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:43
+# 	float t = f - (float)i;
+	assign		$tmp29 ___643_i 	%line{43} %argrw{"wr"}
+	sub		___643_t ___643_f $tmp29 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:45
+# 	float result = ramp[i][component];
+	aref		$tmp30 ramp ___643_i 	%line{45} %argrw{"wrr"}
+	compref		___643_result $tmp30 $const1 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:47
+# 	if (t > 0.0)
+	gt		$tmp31 ___643_t $const3 	%line{47} %argrw{"wrr"}
+	if		$tmp31 61 61 	%argrw{"r"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:48
+# 		result = (1.0 - t) * result + t * ramp[i + 1][component];
+	sub		$tmp32 $const4 ___643_t 	%line{48} %argrw{"wrr"}
+	mul		$tmp33 $tmp32 ___643_result 	%argrw{"wrr"}
+	add		$tmp34 ___643_i $const5 	%argrw{"wrr"}
+	aref		$tmp36 ramp $tmp34 	%argrw{"wrr"}
+	compref		$tmp35 $tmp36 $const1 	%argrw{"wrr"}
+	mul		$tmp37 ___643_t $tmp35 	%argrw{"wrr"}
+	add		___643_result $tmp33 $tmp37 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:50
+# 	return result;
+	assign		$tmp4 ___643_result 	%line{50} %argrw{"wr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:64
+# 	ColorOut[0] = ramp_lookup(ramp, c[0], 0);
+	compassign	ColorOut $const1 $tmp4 	%line{64} %argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:65
+# 	ColorOut[1] = ramp_lookup(ramp, c[1], 1);
+	compref		$tmp39 c $const5 	%line{65} %argrw{"wrr"}
+	functioncall	$const2 121 	%argrw{"r"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:22
+# 	if (at < 0.0 || at > 1.0) {
+	lt		$tmp40 $tmp39 $const3 	%line{22} %argrw{"wrr"}
+	neq		$tmp41 $tmp40 $const1 	%argrw{"wrr"}
+	if		$tmp41 68 71 	%argrw{"r"}
+	gt		$tmp42 $tmp39 $const4 	%argrw{"wrr"}
+	neq		$tmp43 $tmp42 $const1 	%argrw{"wrr"}
+	assign		$tmp41 $tmp43 	%argrw{"wr"}
+	if		$tmp41 94 94 	%argrw{"r"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:24
+# 		if (at < 0.0) {
+	lt		$tmp44 $tmp39 $const3 	%line{24} %argrw{"wrr"}
+	if		$tmp44 80 88 	%argrw{"r"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:25
+# 			t0 = ramp[0][component];
+	aref		$tmp45 ramp $const1 	%line{25} %argrw{"wrr"}
+	compref		___644_t0 $tmp45 $const5 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:26
+# 			dy = t0 - ramp[1][component];
+	aref		$tmp47 ramp $const5 	%line{26} %argrw{"wrr"}
+	compref		$tmp46 $tmp47 $const5 	%argrw{"wrr"}
+	sub		___644_dy ___644_t0 $tmp46 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:27
+# 			at = -at;
+	neg		$tmp39 $tmp39 	%line{27} %argrw{"wr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:30
+# 			t0 = ramp[RAMP_TABLE_SIZE - 1][component];
+	sub		$tmp48 $const6 $const5 	%line{30} %argrw{"wrr"}
+	aref		$tmp49 ramp $tmp48 	%argrw{"wrr"}
+	compref		___644_t0 $tmp49 $const5 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:31
+# 			dy = t0 - ramp[RAMP_TABLE_SIZE - 2][component];
+	sub		$tmp50 $const6 $const7 	%line{31} %argrw{"wrr"}
+	aref		$tmp52 ramp $tmp50 	%argrw{"wrr"}
+	compref		$tmp51 $tmp52 $const5 	%argrw{"wrr"}
+	sub		___644_dy ___644_t0 $tmp51 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:32
+# 			at = at - 1.0;
+	sub		$tmp39 $tmp39 $const4 	%line{32} %argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:34
+# 		return t0 + dy * at * (RAMP_TABLE_SIZE - 1);
+	mul		$tmp53 ___644_dy $tmp39 	%line{34} %argrw{"wrr"}
+	sub		$tmp54 $const6 $const5 	%argrw{"wrr"}
+	assign		$tmp56 $tmp54 	%argrw{"wr"}
+	mul		$tmp55 $tmp53 $tmp56 	%argrw{"wrr"}
+	add		$tmp38 ___644_t0 $tmp55 	%argrw{"wrr"}
+	return
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:37
+# 	float f = clamp(at, 0.0, 1.0) * (RAMP_TABLE_SIZE - 1);
+	functioncall	$const8 97 	%line{37} %argrw{"r"}
+# C:/dev\\blender\\intern\\cycles\\kernel\\shaders\\stdosl.h:144
+# float  log (float a,  float b) { return log(a)/log(b); }
+	min		$tmp58 $tmp39 $const4 	%filename{"C:/dev\\blender\\intern\\cycles\\kernel\\shaders\\stdosl.h"} %line{144} %argrw{"wrr"}
+	max		$tmp57 $tmp58 $const3 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:37
+# 	float f = clamp(at, 0.0, 1.0) * (RAMP_TABLE_SIZE - 1);
+	sub		$tmp59 $const6 $const5 	%filename{"C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl"} %line{37} %argrw{"wrr"}
+	assign		$tmp60 $tmp59 	%argrw{"wr"}
+	mul		___643_f $tmp57 $tmp60 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:40
+# 	int i = (int)f;
+	assign		___643_i ___643_f 	%line{40} %argrw{"wr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:41
+# 	if (i < 0) i = 0;
+	lt		$tmp61 ___643_i $const1 	%line{41} %argrw{"wrr"}
+	if		$tmp61 104 104 	%argrw{"r"}
+	assign		___643_i $const1 	%argrw{"wr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:42
+# 	if (i >= RAMP_TABLE_SIZE) i = RAMP_TABLE_SIZE - 1;
+	ge		$tmp62 ___643_i $const6 	%line{42} %argrw{"wrr"}
+	if		$tmp62 107 107 	%argrw{"r"}
+	sub		___643_i $const6 $const5 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:43
+# 	float t = f - (float)i;
+	assign		$tmp63 ___643_i 	%line{43} %argrw{"wr"}
+	sub		___643_t ___643_f $tmp63 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:45
+# 	float result = ramp[i][component];
+	aref		$tmp64 ramp ___643_i 	%line{45} %argrw{"wrr"}
+	compref		___643_result $tmp64 $const5 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:47
+# 	if (t > 0.0)
+	gt		$tmp65 ___643_t $const3 	%line{47} %argrw{"wrr"}
+	if		$tmp65 120 120 	%argrw{"r"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:48
+# 		result = (1.0 - t) * result + t * ramp[i + 1][component];
+	sub		$tmp66 $const4 ___643_t 	%line{48} %argrw{"wrr"}
+	mul		$tmp67 $tmp66 ___643_result 	%argrw{"wrr"}
+	add		$tmp68 ___643_i $const5 	%argrw{"wrr"}
+	aref		$tmp70 ramp $tmp68 	%argrw{"wrr"}
+	compref		$tmp69 $tmp70 $const5 	%argrw{"wrr"}
+	mul		$tmp71 ___643_t $tmp69 	%argrw{"wrr"}
+	add		___643_result $tmp67 $tmp71 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:50
+# 	return result;
+	assign		$tmp38 ___643_result 	%line{50} %argrw{"wr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:65
+# 	ColorOut[1] = ramp_lookup(ramp, c[1], 1);
+	compassign	ColorOut $const5 $tmp38 	%line{65} %argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:66
+# 	ColorOut[2] = ramp_lookup(ramp, c[2], 2);
+	compref		$tmp73 c $const7 	%line{66} %argrw{"wrr"}
+	functioncall	$const2 180 	%argrw{"r"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:22
+# 	if (at < 0.0 || at > 1.0) {
+	lt		$tmp74 $tmp73 $const3 	%line{22} %argrw{"wrr"}
+	neq		$tmp75 $tmp74 $const1 	%argrw{"wrr"}
+	if		$tmp75 127 130 	%argrw{"r"}
+	gt		$tmp76 $tmp73 $const4 	%argrw{"wrr"}
+	neq		$tmp77 $tmp76 $const1 	%argrw{"wrr"}
+	assign		$tmp75 $tmp77 	%argrw{"wr"}
+	if		$tmp75 153 153 	%argrw{"r"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:24
+# 		if (at < 0.0) {
+	lt		$tmp78 $tmp73 $const3 	%line{24} %argrw{"wrr"}
+	if		$tmp78 139 147 	%argrw{"r"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:25
+# 			t0 = ramp[0][component];
+	aref		$tmp79 ramp $const1 	%line{25} %argrw{"wrr"}
+	compref		___644_t0 $tmp79 $const7 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:26
+# 			dy = t0 - ramp[1][component];
+	aref		$tmp81 ramp $const5 	%line{26} %argrw{"wrr"}
+	compref		$tmp80 $tmp81 $const7 	%argrw{"wrr"}
+	sub		___644_dy ___644_t0 $tmp80 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:27
+# 			at = -at;
+	neg		$tmp73 $tmp73 	%line{27} %argrw{"wr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:30
+# 			t0 = ramp[RAMP_TABLE_SIZE - 1][component];
+	sub		$tmp82 $const6 $const5 	%line{30} %argrw{"wrr"}
+	aref		$tmp83 ramp $tmp82 	%argrw{"wrr"}
+	compref		___644_t0 $tmp83 $const7 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:31
+# 			dy = t0 - ramp[RAMP_TABLE_SIZE - 2][component];
+	sub		$tmp84 $const6 $const7 	%line{31} %argrw{"wrr"}
+	aref		$tmp86 ramp $tmp84 	%argrw{"wrr"}
+	compref		$tmp85 $tmp86 $const7 	%argrw{"wrr"}
+	sub		___644_dy ___644_t0 $tmp85 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:32
+# 			at = at - 1.0;
+	sub		$tmp73 $tmp73 $const4 	%line{32} %argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:34
+# 		return t0 + dy * at * (RAMP_TABLE_SIZE - 1);
+	mul		$tmp87 ___644_dy $tmp73 	%line{34} %argrw{"wrr"}
+	sub		$tmp88 $const6 $const5 	%argrw{"wrr"}
+	assign		$tmp90 $tmp88 	%argrw{"wr"}
+	mul		$tmp89 $tmp87 $tmp90 	%argrw{"wrr"}
+	add		$tmp72 ___644_t0 $tmp89 	%argrw{"wrr"}
+	return
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:37
+# 	float f = clamp(at, 0.0, 1.0) * (RAMP_TABLE_SIZE - 1);
+	functioncall	$const8 156 	%line{37} %argrw{"r"}
+# C:/dev\\blender\\intern\\cycles\\kernel\\shaders\\stdosl.h:144
+# float  log (float a,  float b) { return log(a)/log(b); }
+	min		$tmp92 $tmp73 $const4 	%filename{"C:/dev\\blender\\intern\\cycles\\kernel\\shaders\\stdosl.h"} %line{144} %argrw{"wrr"}
+	max		$tmp91 $tmp92 $const3 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:37
+# 	float f = clamp(at, 0.0, 1.0) * (RAMP_TABLE_SIZE - 1);
+	sub		$tmp93 $const6 $const5 	%filename{"C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl"} %line{37} %argrw{"wrr"}
+	assign		$tmp94 $tmp93 	%argrw{"wr"}
+	mul		___643_f $tmp91 $tmp94 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:40
+# 	int i = (int)f;
+	assign		___643_i ___643_f 	%line{40} %argrw{"wr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:41
+# 	if (i < 0) i = 0;
+	lt		$tmp95 ___643_i $const1 	%line{41} %argrw{"wrr"}
+	if		$tmp95 163 163 	%argrw{"r"}
+	assign		___643_i $const1 	%argrw{"wr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:42
+# 	if (i >= RAMP_TABLE_SIZE) i = RAMP_TABLE_SIZE - 1;
+	ge		$tmp96 ___643_i $const6 	%line{42} %argrw{"wrr"}
+	if		$tmp96 166 166 	%argrw{"r"}
+	sub		___643_i $const6 $const5 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:43
+# 	float t = f - (float)i;
+	assign		$tmp97 ___643_i 	%line{43} %argrw{"wr"}
+	sub		___643_t ___643_f $tmp97 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:45
+# 	float result = ramp[i][component];
+	aref		$tmp98 ramp ___643_i 	%line{45} %argrw{"wrr"}
+	compref		___643_result $tmp98 $const7 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:47
+# 	if (t > 0.0)
+	gt		$tmp99 ___643_t $const3 	%line{47} %argrw{"wrr"}
+	if		$tmp99 179 179 	%argrw{"r"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:48
+# 		result = (1.0 - t) * result + t * ramp[i + 1][component];
+	sub		$tmp100 $const4 ___643_t 	%line{48} %argrw{"wrr"}
+	mul		$tmp101 $tmp100 ___643_result 	%argrw{"wrr"}
+	add		$tmp102 ___643_i $const5 	%argrw{"wrr"}
+	aref		$tmp104 ramp $tmp102 	%argrw{"wrr"}
+	compref		$tmp103 $tmp104 $const7 	%argrw{"wrr"}
+	mul		$tmp105 ___643_t $tmp103 	%argrw{"wrr"}
+	add		___643_result $tmp101 $tmp105 	%argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:50
+# 	return result;
+	assign		$tmp72 ___643_result 	%line{50} %argrw{"wr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:66
+# 	ColorOut[2] = ramp_lookup(ramp, c[2], 2);
+	compassign	ColorOut $const7 $tmp72 	%line{66} %argrw{"wrr"}
+# C:/dev/blender/intern/cycles/kernel/shaders/node_rgb_curves.osl:68
+# 	ColorOut = mix(ColorIn, ColorOut, Fac);
+	mix		ColorOut ColorIn ColorOut Fac 	%line{68} %argrw{"wrrr"}
+	end
